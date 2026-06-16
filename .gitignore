@@ -2,16 +2,36 @@
 __v0_runtime_loader.js
 __v0_devtools.tsx
 __v0_jsx-dev-runtime.ts
+
+# v0 / sandbox directories
 .snowflake/
 .v0-trash/
 .vercel/
 
-# Environment variables
-.env*.local
+# Environment variables (may contain secrets)
+.env
+.env.local
+.env.*.local
 
-# Common ignores
-node_modules
+# Clerk configuration (can include secrets)
+.clerk/
+
+# Dependencies
+node_modules/
+
+# Next.js build output
 .next/
+out/
+
+# OS files
 .DS_Store
-# clerk configuration (can include secrets)
-/.clerk/
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
