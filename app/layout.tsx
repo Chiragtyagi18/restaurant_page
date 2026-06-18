@@ -40,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning className={`${playfairDisplay.variable} ${geistSans.variable}`}>
+      <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${playfairDisplay.variable} ${geistSans.variable}`}>
         <body className="font-sans antialiased text-foreground bg-background">
           <ThemeProvider>
             {children}

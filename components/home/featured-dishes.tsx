@@ -87,42 +87,51 @@ function DishModal({ dish, onClose }: { dish: FeaturedDish; onClose: () => void 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm smooth-colors"
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        initial={{ opacity: 0, scale: 0.92, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3 }}
-        className="relative bg-card border border-border rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        exit={{ opacity: 0, scale: 0.92, y: 30 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="relative bg-card border border-border rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto smooth-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-muted transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-muted transition-all duration-300 hover:scale-110 hover:shadow-lg"
         >
           <X size={20} className="text-foreground" />
         </button>
 
         {/* Image */}
         <div className="relative h-64 sm:h-72 overflow-hidden rounded-t-xl">
-          <img
+          <motion.img
             src={dish.image}
             alt={dish.name}
             className="w-full h-full object-cover"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.6 }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-4 left-4 right-4">
+          <motion.div 
+            className="absolute bottom-4 left-4 right-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
             <div className="flex items-center gap-2 mb-1">
               {dish.spicy && (
-                <span className="bg-red-600 text-white p-1 rounded-full">
+                <span className="bg-red-600 text-white p-1 rounded-full hover:scale-110 transition-transform duration-300">
                   <Flame size={14} />
                 </span>
               )}
               {dish.vegetarian && (
-                <span className="bg-green-600 text-white p-1 rounded-full">
+                <span className="bg-green-600 text-white p-1 rounded-full hover:scale-110 transition-transform duration-300">
                   <Leaf size={14} />
                 </span>
               )}
@@ -130,69 +139,110 @@ function DishModal({ dish, onClose }: { dish: FeaturedDish; onClose: () => void 
             <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
               {dish.name}
             </h3>
-          </div>
+          </motion.div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <p className="text-muted-foreground mb-4">{dish.description}</p>
+        <div className="p-6 space-y-4">
+          <motion.p 
+            className="text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            {dish.description}
+          </motion.p>
 
           {/* Quick stats */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="text-center p-3 bg-muted/50 rounded-lg">
+          <motion.div 
+            className="grid grid-cols-3 gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="text-center p-3 bg-muted/50 rounded-lg hover:bg-muted transition-all duration-300 hover:scale-105">
               <Star size={18} className="mx-auto text-accent mb-1" />
               <p className="text-sm font-bold text-foreground">{dish.rating}</p>
               <p className="text-xs text-muted-foreground">Rating</p>
             </div>
-            <div className="text-center p-3 bg-muted/50 rounded-lg">
+            <div className="text-center p-3 bg-muted/50 rounded-lg hover:bg-muted transition-all duration-300 hover:scale-105">
               <Clock size={18} className="mx-auto text-accent mb-1" />
               <p className="text-sm font-bold text-foreground">{dish.prepTime}</p>
               <p className="text-xs text-muted-foreground">Prep Time</p>
             </div>
-            <div className="text-center p-3 bg-muted/50 rounded-lg">
+            <div className="text-center p-3 bg-muted/50 rounded-lg hover:bg-muted transition-all duration-300 hover:scale-105">
               <ChefHat size={18} className="mx-auto text-accent mb-1" />
               <p className="text-sm font-bold text-foreground">{dish.calories}</p>
               <p className="text-xs text-muted-foreground">Calories</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Chef */}
-          <div className="mb-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             <p className="text-sm text-muted-foreground">Prepared by</p>
             <p className="font-medium text-foreground">{dish.chef}</p>
-          </div>
+          </motion.div>
 
           {/* Ingredients */}
-          <div className="mb-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45 }}
+          >
             <h4 className="font-heading font-bold text-foreground mb-2">Ingredients</h4>
             <div className="flex flex-wrap gap-2">
               {dish.ingredients.map((ing, i) => (
-                <span key={i} className="px-3 py-1 bg-muted rounded-full text-xs font-medium text-foreground">
+                <motion.span 
+                  key={i}
+                  className="px-3 py-1 bg-muted rounded-full text-xs font-medium text-foreground hover:bg-accent/20 hover:text-accent transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.45 + i * 0.05 }}
+                >
                   {ing}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Allergens */}
-          <div className="mb-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
             <h4 className="font-heading font-bold text-foreground mb-2">Allergens</h4>
             <div className="flex flex-wrap gap-2">
               {dish.allergens.map((a, i) => (
-                <span key={i} className="px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-full text-xs font-medium">
+                <motion.span 
+                  key={i}
+                  className="px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-full text-xs font-medium hover:scale-105 transition-transform duration-300"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 + i * 0.05 }}
+                >
                   {a}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Price & Order */}
-          <div className="flex items-center justify-between pt-4 border-t border-border">
-            <span className="text-3xl font-bold text-primary">${dish.price}</span>
-            <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg btn-press transition-all font-medium">
+          <motion.div 
+            className="flex items-center justify-between pt-4 border-t border-border"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55 }}
+          >
+            <span className="text-3xl font-bold text-gradient">${dish.price}</span>
+            <button className="px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg btn-press transition-all font-medium hover:shadow-xl hover:shadow-primary/50">
               Add to Order
             </button>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </motion.div>
@@ -203,12 +253,12 @@ export function FeaturedDishes() {
   const [selectedDish, setSelectedDish] = useState<FeaturedDish | null>(null);
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background smooth-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SlideUp delay={0}>
           <div className="text-center mb-16">
             <p className="text-accent font-semibold text-lg mb-2">Our Specialties</p>
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-foreground mb-4">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-gradient mb-4">
               Featured Dishes
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -220,40 +270,52 @@ export function FeaturedDishes() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredDishes.map((dish, index) => (
             <SlideUp key={dish.id} delay={index * 0.2}>
-                <div className="group cursor-pointer h-full card-glow rounded-lg bg-card border border-border p-4">
+                <div className="group cursor-pointer h-full card-glow rounded-lg bg-card border border-border p-4 overflow-hidden">
                   <div className="relative overflow-hidden rounded-lg mb-4 h-64 bg-muted">
-                    <img
+                    <motion.img
                       src={dish.image}
                       alt={dish.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700"
+                      whileHover={{ scale: 1.1 }}
+                    />
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
                     <div className="absolute top-4 right-4 flex gap-2">
                       {dish.spicy && (
-                        <div className="bg-red-600 text-white p-2 rounded-full">
+                        <motion.div 
+                          className="bg-red-600 text-white p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                          whileHover={{ rotate: 10, scale: 1.15 }}
+                        >
                           <Flame size={20} />
-                        </div>
+                        </motion.div>
                       )}
                       {dish.vegetarian && (
-                        <div className="bg-green-600 text-white p-2 rounded-full">
+                        <motion.div 
+                          className="bg-green-600 text-white p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                          whileHover={{ rotate: -10, scale: 1.15 }}
+                        >
                           <Leaf size={20} />
-                        </div>
+                        </motion.div>
                       )}
                     </div>
                   </div>
 
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-heading text-xl font-bold text-gradient group-hover:from-primary group-hover:to-accent mb-2 transition-all duration-300">
                     {dish.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4">{dish.description}</p>
+                  <p className="text-muted-foreground text-sm mb-4 group-hover:text-foreground transition-colors duration-300">{dish.description}</p>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-primary">${dish.price}</span>
-                    <button
+                    <span className="text-2xl font-bold text-gradient">${dish.price}</span>
+                    <motion.button
                       onClick={() => setSelectedDish(dish)}
-                      className="px-4 py-2 bg-primary text-primary-foreground rounded-lg btn-press transition-all text-sm font-medium"
+                      className="px-4 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg btn-press transition-all text-sm font-medium hover:shadow-lg hover:shadow-primary/50"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       View Details
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
             </SlideUp>
